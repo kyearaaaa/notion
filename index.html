@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastel Calculator</title>
+    <style>
+        body {
+          font-family: sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background-color: #f5f5f5; /* Light cream */
+        }
+
+        .calculator {
+          background-color: #fce4e4; /* Light pink */
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          width: 300px;
+        }
+
+        #display {
+          background-color: #e0ebef; /* Lavender */
+          color: #333; /* Dark gray */
+          font-size: 24px;
+          padding: 15px;
+          border-radius: 5px;
+          text-align: right;
+        }
+
+        .buttons {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          margin-top: 15px;
+        }
+
+        button {
+          background-color: #d0e3f0; /* Soft blue */
+          color: #333; /* Dark gray */
+          border: none;
+          border-radius: 5px;
+          padding: 10px;
+          cursor: pointer;
+          font-size: 18px;
+        }
+
+        button:hover {
+          background-color: #c2d6e3; /* Lighter blue on hover */
+        }
+
+        .buttons button:nth-child(5),
+        .buttons button:nth-child(9),
+        .buttons button:nth-child(13),
+        .buttons button:nth-child(17) {
+          background-color: #fce4e4; /* Light pink for some buttons */
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div id="display"></div>
+        <div class="buttons">
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="appendOperator('/')">/</button>
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="appendOperator('*')">*</button>
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button onclick="appendOperator('-')">-</button>
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendDecimal()">.</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendOperator('+')">+</button>
+        </div>
+    </div>
+    <script>
+        let currentNumber = "0"; // Display 0 initially
+        let previousNumber = "";
+        let operator = "";
+
+        function appendNumber(number) {
+          currentNumber += number;
+          // Update the display content using textContent for broader compatibility
+          document.getElementById("display").textContent = currentNumber;
+        }
+
+        function appendOperator(op) {
+          if (currentNumber === "") return;
+          previousNumber = currentNumber;
+          currentNumber = "";
+          operator = op;
+        }
+
+        function calculate() {
+  if (currentNumber === "" || operator === "") return;
+  let result = 0;
+  let a = parseFloat(previousNumber);
+  let b = parseFloat(currentNumber);
+
+  // Complete the calculation logic based on the operator
+  switch (operator) {
+    case "+":
+      result = a + b;
+      break;
+    case "-":
+      result = a - b;
+      break;
+    case "*":
+      result = a * b;
+      break;
+    case "/":
+      if (b === 0) {
+        // Handle division by zero error
+        alert("Error: Division by zero!");
+        return; // Stop further calculations
+      }
+      result = a / b;
+      break;
+  }
+
+  // Update the display with the result
+  currentNumber = result.toString(); // Convert result to string
+  document.getElementById("display").textContent = currentNumber;
+}
+
+</script>
+</body>
+</html>
